@@ -1,6 +1,6 @@
 package com.example.financetracker.entity;
 
-public enum TransactionType {
+public enum enumTransactionType {
     INCOME,
     EXPENSE
 }

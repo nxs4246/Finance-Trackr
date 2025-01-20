@@ -2,6 +2,7 @@ package com.example.financetracker.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
 
@@ -16,6 +17,7 @@ public class Transaction {
     private String description;
 
     @Column(nullable = false)
+    @Positive
     private double amount;
 
     @Column(nullable = false)
@@ -24,18 +26,27 @@ public class Transaction {
     @NotNull
     @Enumerated(EnumType.STRING) // Ensures type is stored as a string in the database
     @Column(nullable = false)
-    private TransactionType type;
+    private enumTransactionType type;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
 
     protected Transaction() {
 
     }
 
-    public Transaction(String description, double amount, LocalDate date, TransactionType type) {
+    public Transaction(String description, double amount, LocalDate date, enumTransactionType type, User user, Category category) {
         this.description = description;
         this.amount = amount;
         this.date = date;
         this.type = type;
+        this.user = user;
+        this.category = category;
     }
 
     public Long getTransactionId() {
@@ -66,12 +77,41 @@ public class Transaction {
         this.date = date;
     }
 
-    public TransactionType getType() {
+    public enumTransactionType getType() {
         return type;
     }
 
-    public void setType(TransactionType type) {
+    public void setType(enumTransactionType type) {
         this.type = type;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionId=" + transactionId +
+                ", description='" + description +
+                ", amount=" + amount +
+                ", date=" + date +
+                ", type=" + type +
+                ", user=" + (user != null ? user.getUserId() : "null") +
+                ", category=" + (category != null ? category.getCategoryId() : "null") +
+                '}';
     }
 
 }
