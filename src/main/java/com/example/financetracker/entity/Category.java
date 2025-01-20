@@ -15,7 +15,7 @@ public class Category {
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, unique = true)
-    private enumCategoryType categoryName;
+    private enumCategoryType c_type;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Transaction> transactions;
@@ -23,20 +23,20 @@ public class Category {
     protected Category() {
     }
 
-    public Category(enumCategoryType categoryName) {
-        this.categoryName = categoryName;
+    public Category(enumCategoryType c_type) {
+        this.c_type = c_type;
     }
 
     public Long getCategoryId() {
         return categoryId;
     }
 
-    public enumCategoryType getCategoryName() {
-        return categoryName;
+    public enumCategoryType getC_type() {
+        return c_type;
     }
 
-    public void setCategoryName(enumCategoryType categoryName) {
-        this.categoryName = categoryName;
+    public void setC_type(enumCategoryType c_type) {
+        this.c_type = c_type;
     }
 
     public List<Transaction> getTransactions() {
@@ -51,7 +51,7 @@ public class Category {
     public String toString() {
         return "Category{" +
                 "categoryId=" + categoryId +
-                ", categoryName=" + categoryName +
+                ", c_type=" + c_type +
                 '}';
     }
 

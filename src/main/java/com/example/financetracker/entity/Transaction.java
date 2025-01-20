@@ -26,7 +26,7 @@ public class Transaction {
     @NotNull
     @Enumerated(EnumType.STRING) // Ensures type is stored as a string in the database
     @Column(nullable = false)
-    private enumTransactionType type;
+    private enumTransactionType t_type;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -37,14 +37,13 @@ public class Transaction {
     private Category category;
 
     protected Transaction() {
-
     }
 
-    public Transaction(String description, double amount, LocalDate date, enumTransactionType type, User user, Category category) {
+    public Transaction(String description, double amount, LocalDate date, enumTransactionType t_type, User user, Category category) {
         this.description = description;
         this.amount = amount;
         this.date = date;
-        this.type = type;
+        this.t_type = t_type;
         this.user = user;
         this.category = category;
     }
@@ -78,11 +77,11 @@ public class Transaction {
     }
 
     public enumTransactionType getType() {
-        return type;
+        return t_type;
     }
 
-    public void setType(enumTransactionType type) {
-        this.type = type;
+    public void setType(enumTransactionType t_type) {
+        this.t_type = t_type;
     }
 
     public User getUser() {
@@ -108,7 +107,7 @@ public class Transaction {
                 ", description='" + description +
                 ", amount=" + amount +
                 ", date=" + date +
-                ", type=" + type +
+                ", type=" + t_type +
                 ", user=" + (user != null ? user.getUserId() : "null") +
                 ", category=" + (category != null ? category.getCategoryId() : "null") +
                 '}';

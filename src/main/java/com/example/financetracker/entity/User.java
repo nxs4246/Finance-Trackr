@@ -2,6 +2,7 @@ package com.example.financetracker.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
+    @NotBlank(message = "username cannot be blank!")
     private String userName;
 
     @Column(nullable = false)
@@ -22,19 +24,18 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
-    @Column(nullable = false)
-    @Email
+    @Column(nullable = false, unique = true)
+    @Email(message = "Email must be valid!")
     private String email;
 
     @Column(nullable = false)
-    @Size(min = 6, max = 50)
+    @Size(min = 6, max = 50, message = "Password must be between 6 and 50 characters!")
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Transaction> transactions;
 
     protected User() {
-
     }
 
     public User(String userName, String firstName, String lastName, String email, String password) {
@@ -101,11 +102,11 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", userName='" + userName +
-                ", firstName='" + firstName +
-                ", lastName='" + lastName +
-                ", email='" + email +
+                ", userName='" + userName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", transactionsCount=" + (transactions != null ? transactions.size() : 0) +
                 '}';
     }
-
 }
