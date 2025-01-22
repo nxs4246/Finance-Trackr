@@ -11,45 +11,42 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transactionId;
+    private Long id;
+
+    @Column(nullable = false)
+    private String type; // Income vs Expense
+
+    @Column(nullable = false)
+    private String category;
+
+    @Positive
+    @Column(nullable = false)
+    private Double amount;
+
+    @Column(nullable = false)
+    private LocalDate date;
 
     @Column
     private String description;
-
-    @Column(nullable = false)
-    @Positive
-    private double amount;
-
-    @Column(nullable = false)
-    private LocalDate date; // Changed from String to LocalDate
-
-    @NotNull
-    @Enumerated(EnumType.STRING) // Ensures type is stored as a string in the database
-    @Column(nullable = false)
-    private enumTransactionType t_type;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
-
     protected Transaction() {
     }
 
-    public Transaction(String description, double amount, LocalDate date, enumTransactionType t_type, User user, Category category) {
+    public Transaction(String type, String category, Double amount, LocalDate date, String description, User user) {
         this.description = description;
         this.amount = amount;
         this.date = date;
-        this.t_type = t_type;
+        this.type = type;
         this.user = user;
         this.category = category;
     }
 
-    public Long getTransactionId() {
-        return transactionId;
+    public Long getId() {
+        return id;
     }
 
     public String getDescription() {
@@ -64,7 +61,7 @@ public class Transaction {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 
@@ -76,12 +73,20 @@ public class Transaction {
         this.date = date;
     }
 
-    public enumTransactionType getType() {
-        return t_type;
+    public String getType() {
+        return type;
     }
 
-    public void setType(enumTransactionType t_type) {
-        this.t_type = t_type;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public User getUser() {
@@ -92,24 +97,16 @@ public class Transaction {
         this.user = user;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
     @Override
     public String toString() {
         return "Transaction{" +
-                "transactionId=" + transactionId +
+                "transactionId=" + id +
                 ", description='" + description +
                 ", amount=" + amount +
                 ", date=" + date +
-                ", type=" + t_type +
+                ", type=" + type +
                 ", user=" + (user != null ? user.getUserId() : "null") +
-                ", category=" + (category != null ? category.getCategoryId() : "null") +
+                ", category=" + category +
                 '}';
     }
 

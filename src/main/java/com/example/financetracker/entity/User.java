@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,12 +17,14 @@ public class User {
 
     @Column(nullable = false, unique = true)
     @NotBlank(message = "Username cannot be blank")
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
+    @NotBlank(message = "First name cannot be blank")
     private String firstName;
 
     @Column(nullable = false)
+    @NotBlank(message = "Last name cannot be blank")
     private String lastName;
 
     @Email(message = "Email must be valid")
@@ -33,13 +36,13 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Transaction> transactions;
+    private List<Transaction> transactions = new ArrayList<>();
 
     protected User() {
     }
 
-    public User(String userName, String firstName, String lastName, String email, String password) {
-        this.userName = userName;
+    public User(String username, String firstName, String lastName, String email, String password) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -51,11 +54,11 @@ public class User {
     }
 
     public String getUserName() {
-        return userName;
+        return username;
     }
 
     public void setUserName(String userName) {
-        this.userName = userName;
+        this.username = userName;
     }
 
     public List<Transaction> getTransactions() {
@@ -102,10 +105,10 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
+                ", userName='" + username +
+                ", firstName='" + firstName +
+                ", lastName='" + lastName +
+                ", email='" + email +
                 ", transactionsCount=" + (transactions != null ? transactions.size() : 0) +
                 '}';
     }
