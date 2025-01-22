@@ -15,7 +15,7 @@ public class User {
     private Long userId;
 
     @Column(nullable = false, unique = true)
-    @NotBlank(message = "username cannot be blank!")
+    @NotBlank(message = "Username cannot be blank")
     private String userName;
 
     @Column(nullable = false)
@@ -24,12 +24,12 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Email(message = "Email must be valid")
     @Column(nullable = false, unique = true)
-    @Email(message = "Email must be valid!")
     private String email;
 
+    @Size(min = 6, max = 50, message = "Password must be between 6 and 50 characters")
     @Column(nullable = false)
-    @Size(min = 6, max = 50, message = "Password must be between 6 and 50 characters!")
     private String password;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
