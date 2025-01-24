@@ -1,4 +1,4 @@
-package com.example.financetracker;
+/* package com.example.financetracker;
 
 import com.example.financetracker.model.Transaction;
 import com.example.financetracker.model.User;
@@ -67,6 +67,7 @@ public class TestServiceLayer {
 
             transactionService.saveTransaction(transaction1);
             transactionService.saveTransaction(transaction2);
+            Transaction t3 = transactionService.saveTransaction(transaction2);
 
             // 4. Fetch transactions for the user
             List<Transaction> transactions = transactionService.getTransactionsByUserId(user.getId());
@@ -89,3 +90,4 @@ public class TestServiceLayer {
         };
     }
 }
+*/

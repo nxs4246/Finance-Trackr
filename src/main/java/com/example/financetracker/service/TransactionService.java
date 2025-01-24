@@ -32,4 +32,17 @@ public class TransactionService {
     public List<Transaction> getTransactionsByCategory(Long userId, String category) {
         return transactionRepository.findByUser_IdAndCategory(userId, category);
     }
+
+    public Transaction updateTransaction(Long transactionId, Transaction updatedTransaction) {
+        Transaction existingTransaction = transactionRepository.findById(transactionId)
+                .orElseThrow(() -> new RuntimeException("Transaction not found"));
+
+        existingTransaction.setType(updatedTransaction.getType());
+        existingTransaction.setCategory(updatedTransaction.getCategory());
+        existingTransaction.setAmount(updatedTransaction.getAmount());
+        existingTransaction.setDate(updatedTransaction.getDate());
+        existingTransaction.setDescription(updatedTransaction.getDescription());
+
+        return transactionRepository.save(existingTransaction);
+    }
 }
