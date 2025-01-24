@@ -16,7 +16,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for testing
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/signup", "/api/auth/login").permitAll() // Allow signup and login
+                        .requestMatchers("/api/auth/signup", "/api/auth/login", "/api/transactions/**").permitAll() // Allow signup and login
+                        // .requestMatchers("/api/transactions/**").authenticated()
                         .anyRequest().authenticated() // All other requests require authentication
                 );
 
