@@ -11,11 +11,6 @@ public class IndexController {
         return "Homepage";
     }
 
-    @GetMapping("/test")
-    public String getTest() {
-        return "Hello Test";
-    }
-
     @GetMapping("/app/admin")
     public String getAdmin() {
         return "Admin";
