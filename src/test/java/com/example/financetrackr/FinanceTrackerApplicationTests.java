@@ -1,4 +1,4 @@
-package com.example.financetracker;
+package com.example.financetrackr;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

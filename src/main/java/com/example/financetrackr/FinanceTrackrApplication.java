@@ -1,13 +1,13 @@
-package com.example.financetracker;
+package com.example.financetrackr;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FinanceTrackerApplication {
+public class FinanceTrackrApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FinanceTrackerApplication.class, args);
+		SpringApplication.run(FinanceTrackrApplication.class, args);
 	}
 
 }
