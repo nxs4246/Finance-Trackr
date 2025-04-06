@@ -12,37 +12,40 @@
 
 <div class="container">
 
-    <h3>Transactions</h3>
+    <h3 class="pt-4 pb-2">Transactions</h3>
     <hr>
 
-    <a th:href="@{/employees/showFormForAdd}" class="btn btn-primary btn-sm mb-3">
+    <a th:href="@{/transactions/showFormForAdd}" class="btn btn-primary btn-sm mb-3">
         Add Transaction
     </a>
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
+            <th>Type</th>
+            <th>Amount</th>
+            <th>Date</th>
+            <th>Description</th>
             <th>Action</th>
         </tr>
         </thead>
 
         <tbody>
-        <tr th:each="tempEmployee : ${employees}">
-            <td th:text="${tempEmployee.firstName}" />
-            <td th:text="${tempEmployee.lastName}" />
-            <td th:text="${tempEmployee.email}" />
-            <!-- update button -->
+        <tr th:each="tempT : ${transactions}">
+            <td th:text="${tempT.type}" />
+            <td th:text="${tempT.amount}" />
+            <td th:text="${tempT.date}" />
+            <td th:text="${tempT.description}" />
+
             <td>
-                <a th:href="@{/employees/showFormForUpdate(employeeId=${tempEmployee.id})}"
+                <!-- update button -->
+                <a th:href="@{/transactions/showFormForUpdate(transactionId=${tempT.id})}"
                    class="btn btn-info btn-sm">
                     Update
                 </a>
 
                 <!-- delete button -->
-                <a th:href="@{/employees/delete(employeeId=${tempEmployee.id})}"
+                <a th:href="@{/transactions/delete(transactionId=${tempT.id})}"
                    class="btn btn-danger btn-sm"
                    onclick="if(!(confirm('Are you sure you want to delete this employee?'))) return false">
                     Delete
