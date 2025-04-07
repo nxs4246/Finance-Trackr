@@ -3,6 +3,7 @@ package com.example.financetrackr.service;
 import com.example.financetrackr.dao.TransactionRepository;
 import com.example.financetrackr.entity.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> findAll() {
-        return transactionRepository.findAll();
+        return transactionRepository.findAll(Sort.by(Sort.Order.desc("date")));
     }
 
     @Override
