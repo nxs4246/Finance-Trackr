@@ -9,6 +9,42 @@
 
     <!-- Add Marked.js for Markdown rendering -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        /* Styling for rendered markdown */
+        #markdownResponse h1, #markdownResponse h2, #markdownResponse h3 {
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        #markdownResponse h3 {
+            color: #0d6efd; /* Bootstrap primary color */
+        }
+
+        #markdownResponse ul, #markdownResponse ol {
+            padding-left: 1.5rem;
+        }
+
+        #markdownResponse p {
+            margin-bottom: 0.75rem;
+        }
+
+        #markdownResponse strong {
+            font-weight: 600;
+        }
+
+        /* Loading spinner container */
+        .loading-container {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        /* Loading spinner text */
+        .loading-text {
+            margin-left: 0.5rem;
+        }
+    </style>
 </head>
 <body>
 
@@ -61,35 +97,54 @@
     <hr class="mt-5">
     <h3 class="pt-2 pb-2">💬 Ask your AI Financial Advisor</h3>
 
-    <form th:action="@{/transactions/chat}" method="post">
+    <form id="chatForm" th:action="@{/transactions/chat}" method="post">
         <div class="mb-3">
         <textarea name="userPrompt" class="form-control" rows="3"
-                  placeholder="Ask something like: 'What’s my total spending this month?'"></textarea>
+                  placeholder="Ask something like: 'What's my total spending this month?'"></textarea>
         </div>
-        <button type="submit" class="btn btn-success">Ask AI</button>
+        <button type="submit" class="btn btn-success" id="submitButton">Ask AI</button>
     </form>
 
     <!-- Chat response with Markdown rendering -->
     <div class="mt-3" th:if="${aiResponse}">
         <strong>AI Response:</strong>
-        <div id="markdownResponse" class="card p-3 mt-2 mb-6"></div>
+        <div id="markdownResponse" class="card p-3 mt-2 mb-4"></div>
         <!-- Hidden input to store the response -->
         <input type="hidden" id="rawResponse" th:value="${aiResponse}">
     </div>
 </div>
 
-<!-- Script to render markdown -->
-<script th:if="${aiResponse}">
+<!-- Script to render markdown and handle button state -->
+<script>
     document.addEventListener('DOMContentLoaded', function() {
-        const rawResponse = document.getElementById('rawResponse').value;
-        const markdownResponse = document.getElementById('markdownResponse');
+        // Render markdown if response exists
+        const rawResponseElement = document.getElementById('rawResponse');
+        if (rawResponseElement) {
+            const rawResponse = rawResponseElement.value;
+            const markdownResponse = document.getElementById('markdownResponse');
 
-        marked.setOptions({
-            breaks: true,
-            gfm: true
-        });
+            // Set options for marked.js
+            marked.setOptions({
+                breaks: true, // Add line breaks on single newlines
+                gfm: true     // Use GitHub Flavored Markdown
+            });
 
-        markdownResponse.innerHTML = marked.parse(rawResponse);
+            // Convert markdown to HTML and render
+            markdownResponse.innerHTML = marked.parse(rawResponse);
+        }
+
+        // Handle form submission to update button state
+        const chatForm = document.getElementById('chatForm');
+        const submitButton = document.getElementById('submitButton');
+
+        // Make sure form exists before adding event listener
+        if (chatForm) {
+            chatForm.addEventListener('submit', function() {
+                // Disable submit button and change text
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Processing...';
+            });
+        }
     });
 </script>
 
