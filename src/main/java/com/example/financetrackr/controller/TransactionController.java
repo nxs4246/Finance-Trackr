@@ -10,6 +10,71 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/transactions")
+public class TransactionController {
+
+    private final TransactionService transactionService;
+    private final OpenRouterService openRouterService;
+
+    @Autowired
+    public TransactionController(TransactionService transactionService, OpenRouterService openRouterService) {
+        this.transactionService = transactionService;
+        this.openRouterService = openRouterService;
+    }
+
+    // GET all transactions
+    @GetMapping
+    public List<Transaction> getAllTransactions() {
+        return transactionService.findAll();
+    }
+
+    // GET one transaction by ID
+    @GetMapping("/{id}")
+    public Transaction getTransaction(@PathVariable int id) {
+        return transactionService.findById(id);
+    }
+
+    // CREATE or UPDATE transaction
+    @PostMapping
+    public Transaction saveTransaction(@RequestBody Transaction theTransaction) {
+        return transactionService.save(theTransaction);
+    }
+
+    // DELETE transaction
+    @DeleteMapping("/{id}")
+    public String deleteTransaction(@PathVariable int id) {
+        transactionService.deleteById(id);
+        return "Deleted transaction id - " + id;
+    }
+
+    // POST to chat with AI using transaction context
+    @PostMapping("/chat")
+    public Map<String, String> askFinancialAdvisor(@RequestBody Map<String, String> payload) {
+        String userPrompt = payload.get("userPrompt");
+        List<Transaction> theTransactions = transactionService.findAll();
+
+        StringBuilder contextBuilder = new StringBuilder();
+        for (Transaction t : theTransactions) {
+            contextBuilder.append("Type: ").append(t.getType())
+                    .append(", Amount: ").append(t.getAmount())
+                    .append(", Date: ").append(t.getDate())
+                    .append(", Description: ").append(t.getDescription())
+                    .append("\n");
+        }
+
+        String fullPrompt = "Here are my recent transactions:\n" + contextBuilder +
+                "\nNow answer this: " + userPrompt;
+
+        String aiResponse = openRouterService.getChatResponse(fullPrompt);
+
+        return Map.of("aiResponse", aiResponse);
+    }
+}
+
+/* This portion of the code below is for Thymeleaf not React.
 
 @Controller
 @RequestMapping("/transactions")
@@ -102,3 +167,4 @@ public class TransactionController {
         return "transactions/list-transactions";
     }
 }
+*/
