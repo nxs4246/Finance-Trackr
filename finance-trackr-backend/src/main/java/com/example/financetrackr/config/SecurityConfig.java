@@ -53,6 +53,8 @@ public class SecurityConfig {
         return source;
     }
 
+
+    // USERNAME AND PASSWORD FOR DEMO PURPOSES ONLY
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails user = User.withUsername("demouser")

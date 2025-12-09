@@ -5,8 +5,8 @@ Finance Trackr is a personal finance web app that allows users to manage their i
 ## Tech Stack
 
 - Spring Boot (Backend)
-- Thymeleaf (Frontend)
-- Bootstrap CSS (Styling)
+- React (Frontend)
+- Shad/cn (Styling)
 - MySQL (Database)
 - OpenRouter API (AI Integration)
 
@@ -14,7 +14,7 @@ Finance Trackr is a personal finance web app that allows users to manage their i
 
 - Create, read, update, and delete income and expense transactions
 - Get personalized AI-generated financial insights based on your transaction history
-- Clean and responsive UI using Bootstrap
+- Clean and responsive UI using Shad/cn with React
 
 ## Getting Started
 
@@ -23,6 +23,7 @@ Finance Trackr is a personal finance web app that allows users to manage their i
 - Java 17+
 - Maven
 - MySQL
+- Node.js and npm
 - OpenRouter API key
 
 ### Setup Instructions
@@ -34,7 +35,7 @@ Finance Trackr is a personal finance web app that allows users to manage their i
 
 2. **Configure `application.properties`**
 
-   Update the `src/main/resources/application.properties` file with your database and OpenRouter API credentials:
+   Update the `src/main/resources/application.properties` file with your database connection and OpenRouter API credentials:
 
    ```properties
    #
@@ -42,8 +43,8 @@ Finance Trackr is a personal finance web app that allows users to manage their i
    # change these to match your database configuration
    #
    spring.datasource.url=jdbc:mysql://localhost:3306/finance_tracker
-   spring.datasource.username=springstudent
-   spring.datasource.password=springstudent
+   spring.datasource.username=
+   spring.datasource.password=
 
    #
    # OpenRouter AI Properties
@@ -51,7 +52,7 @@ Finance Trackr is a personal finance web app that allows users to manage their i
    #
    openrouter.api.key=
    openrouter.api.url=https://openrouter.ai/api/v1/chat/completions
-   openrouter.api.model=deepseek/deepseek-chat-v3-0324:free
+   openrouter.api.model=google/gemini-2.5-flash-lite
 
    openrouter.system.prompt=You are a helpful AI financial advisor. You answer questions based on user's personal transactions.
    ```
@@ -61,33 +62,61 @@ Finance Trackr is a personal finance web app that allows users to manage their i
 
    Run the provided SQL script ``finance_tracker.sql`` in MySql to create the database schema and insert some sample transaction data.
 
-4. **Run the application**
+4. **Run the backend application**
 
-   Run the Finance Trackr application using IntelliJ or from the command line with:
+   Run the ``finance-trackr-backend`` application using IntelliJ or from the command line with:
    ```bash
    mvn spring-boot:run
    ```
 
-5. **Access the app**
+5. **Run the frontend application**
 
-   Open your browser and go to:
+   Navigate to the ``finance-trackr-frontend`` directory and install dependencies:
+   ```bash
+   npm install
    ```
-   http://localhost:8080/transactions/list
+
+   Start the React development server:
+   ```bash
+   npm run dev
    ```
+
+6. **Access the app**
+
+   Open your browser and go to the frontend URL, which is typically:
+   ```
+   http://localhost:5173
+   ```
+
+7. **Authentication**
+
+   Since the app currently uses a hardcoded single-user authentication for initial testing, please use the following credentials when prompted:
+   ``username: demouser``
+   ``password: demopassword``
 
 ## Screenshots
 
-### Home page
+### Authentication Page
 
-![Homepage](./readme/transaction_list.png)
+![Authentication](./resources/auth.png)
 
-### Add/Update page
+### Home Page
 
-![Add/Update Page](./readme/add_update.png)
+![Homepage](./resources/home.png)
 
-### AI Advisor response
+### Add/Update Popup
 
-![Add/Update Page](./readme/ai_response.png)
+![Add/Update Page](./resources/add.png)
+
+### AI Chat
+
+![Add/Update Page](./resources/ai.png)
+
+### News Widget
+
+![Add/Update Page](./resources/widgets.png)
+
+
 
 ## Future Improvements
 
